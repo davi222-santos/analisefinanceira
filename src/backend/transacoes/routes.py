@@ -9,24 +9,26 @@ from flask import Blueprint, request, jsonify
 import uuid
 
 from db import *
+from datetime import datetime
 
 
 transacoes_bp = Blueprint('transacoes', __name__)
 
 @transacoes_bp.route('/api/transacoes', methods=['POST'])
 def inserir_transacao():
-    #pega dados da entrada
     dados = request.get_json()
     
-    #cria variaveis para inserir no db
+    data_str = dados.get('data')
+    data = datetime.strptime(data_str, '%Y-%m-%d') if data_str else None
+
     documento = {
-        "data" : dados.get('data'),
-        "valor" : dados.get('valor'),
-        "tipo" : dados.get('tipo'),
-        "categoria" : dados.get('categoria'),
-        "metodo" : dados.get('metodo'),
-        "descricao" : dados.get('descricao'),
-        "remetente" : dados.get('remetente')
+        "data": data,
+        "valor": dados.get('valor'),
+        "tipo": dados.get('tipo'),
+        "categoria": dados.get('categoria'),
+        "metodo": dados.get('metodo'),
+        "descricao": dados.get('descricao'),
+        "remetente": dados.get('remetente')
     }
 
     coll_transacoes.insert_one(documento)

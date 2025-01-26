@@ -1,4 +1,5 @@
 import os, sys
+from datetime import datetime
 
 # Configura o diretório base do projeto
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -10,17 +11,51 @@ from graficos.utils.grafico_barras import gerar_grafico_barras
 from graficos.utils.grafico_pizza import gerar_grafico_pizza
 from graficos.utils.grafico_fluxo_caixa import gerar_grafico_fluxo_caixa
 import os
+from db import coll_transacoes
 
 graficos_bp = Blueprint('graficos', __name__)
+
+def criar_metricas(inicio, fim):
+    inicio = datetime.strptime(inicio, '%Y-%m-%d')
+    fim = datetime.strptime(fim, '%Y-%m-%d')
+
+    transacoes = coll_transacoes.find({
+        'data': {'$gte': inicio, '$lte': fim}
+    })
+
+    receita = 0
+    despesas = 0
+
+    for transacao in transacoes:
+        if transacao['tipo'] == 'entrada':
+            receita += transacao['valor']
+        elif transacao['tipo'] == 'saida':
+            despesas += transacao['valor']
+
+    lucro = receita - despesas
+
+    metricas = {
+        "Receita": receita,
+        "Despesas": despesas,
+        "Lucro": lucro
+    }    
+
+    print(metricas)
+
+    return metricas
 
 @graficos_bp.route('/api/grafico', methods=['POST'])
 def criar_grafico():
     dados = request.get_json()
     periodo = dados.get('periodo')
-    metricas = dados.get('metricas')
     grafico = dados.get('grafico')
 
-    if not periodo or not metricas or not grafico:
+    inicio = periodo.get('inicio')
+    fim = periodo.get('fim')
+
+    metricas = criar_metricas(inicio, fim)
+
+    if not periodo or not grafico:
         return jsonify({'error': 'Dados incompletos'}), 400
 
     tipos_grafico = ['linhas', 'barras', 'pizza', 'fluxo_de_caixa']
