@@ -15,39 +15,6 @@ graficos_bp = Blueprint('graficos', __name__)
 
 @graficos_bp.route('/api/grafico', methods=['POST'])
 def criar_grafico():
-    """
-    Cria um gráfico com base nos dados fornecidos.
-    ---
-    tags:
-      - Gráficos
-    parameters:
-      - name: dados
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            periodo:
-              type: string
-              example: "mensal"
-            metricas:
-              type: object
-              additionalProperties:
-                type: number
-              example:
-                Receita: 20
-                Despesas: 5
-                Lucro: 8
-            grafico:
-              type: string
-              enum: [linhas, barras, pizza, fluxo_de_caixa]
-              example: "linhas"
-    responses:
-      200:
-        description: Gráfico gerado com sucesso
-      400:
-        description: Dados incompletos ou tipo de gráfico inválido
-    """
     dados = request.get_json()
     periodo = dados.get('periodo')
     metricas = dados.get('metricas')
