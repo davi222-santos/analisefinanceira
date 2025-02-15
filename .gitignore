@@ -1,2 +1,5 @@
 __pycache__/
 projeto_analise_financeira_venv/
+env/
+.env
+src/backend/graficos/utils/*.png
