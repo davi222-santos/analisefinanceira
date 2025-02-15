@@ -30,9 +30,9 @@ def novo_usuario():
         'senha': hashed_password 
     })
 
-    user_id = coll_usuarios.find_one({'cnpj': data['cnpj']}, {'_id': 1})['_id']
+    user_id = coll_usuarios.find_one({'cnpj': data['cnpj']}, {'_id': 1})['_id'].__str__()
 
-    return jsonify({'message': 'Usuário criado com sucesso', 'user_id': user_id.__str__()}), 201
+    return jsonify({'message': 'Usuário criado com sucesso', 'user_id': user_id}), 201
 
 
 @usuario_bp.route('/api/usuario/auth', methods=['POST'])
@@ -44,9 +44,10 @@ def autenticar_usuario():
     if not all(field in data for field in required_fields):
         return jsonify({'message': 'Dados incompletos'}), 400
 
-    usuario = coll_usuarios.find_one({'cnpj': data['cnpj']}, {'_id': 0})
+    usuario = coll_usuarios.find_one({'cnpj': data['cnpj']})
 
     if not usuario or bcrypt.checkpw(generate_password_hash(data['senha']), usuario['senha']):
         return jsonify({'message': 'Credenciais inválidas'}), 401
     
-    return jsonify({'message': 'Usuário autenticado com sucesso'}), 200
+    user_id = usuario['_id'].__str__()
+    return jsonify({'message': 'Usuário autenticado com sucesso', 'user_id': user_id}), 200
