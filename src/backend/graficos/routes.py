@@ -10,7 +10,6 @@ from graficos.utils.grafico_linhas import gerar_grafico_linhas
 from graficos.utils.grafico_barras import gerar_grafico_barras
 from graficos.utils.grafico_pizza import gerar_grafico_pizza
 from graficos.utils.grafico_fluxo_caixa import gerar_grafico_fluxo_caixa
-import os
 from db import coll_transacoes
 
 graficos_bp = Blueprint('graficos', __name__)
@@ -27,10 +26,11 @@ def criar_metricas(inicio, fim):
     despesas = 0
 
     for transacao in transacoes:
+        valor = float(transacao['valor'])  # Garantindo que o valor seja numérico
         if transacao['tipo'] == 'entrada':
-            receita += transacao['valor']
+            receita += valor
         elif transacao['tipo'] == 'saida':
-            despesas += transacao['valor']
+            despesas += valor
 
     lucro = receita - despesas
 
@@ -47,16 +47,18 @@ def criar_metricas(inicio, fim):
 @graficos_bp.route('/api/grafico', methods=['POST'])
 def criar_grafico():
     dados = request.get_json()
-    periodo = dados.get('periodo')
-    grafico = dados.get('grafico')
+    
+    # Verifica se os dados necessários estão presentes
+    if not dados or not dados.get('periodo') or not dados.get('grafico'):
+        return jsonify({'error': 'Dados incompletos'}), 400
+
+    periodo = dados['periodo']
+    grafico = dados['grafico']
 
     inicio = periodo.get('inicio')
     fim = periodo.get('fim')
 
     metricas = criar_metricas(inicio, fim)
-
-    if not periodo or not grafico:
-        return jsonify({'error': 'Dados incompletos'}), 400
 
     tipos_grafico = ['linhas', 'barras', 'pizza', 'fluxo_de_caixa']
     if grafico not in tipos_grafico:

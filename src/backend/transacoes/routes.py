@@ -72,13 +72,10 @@ def get_transacoes(user_id):
 @transacoes_bp.route('/api/transacoes/<id>', methods=['DELETE'])
 def remover_transacao(id):
     try:
-        # Converte o id para ObjectId
         transacao_id = ObjectId(id)
 
-        # Remover a transação do banco de dados
         resultado = coll_transacoes.delete_one({"_id": transacao_id})
 
-        # Verifica se a transação foi encontrada e removida
         if resultado.deleted_count == 0:
             return jsonify({"erro": "Transação não encontrada"}), 404
 
