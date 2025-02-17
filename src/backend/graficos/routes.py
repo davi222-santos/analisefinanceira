@@ -73,20 +73,26 @@ def criar_grafico():
     elif grafico == 'fluxo_de_caixa':
         return gerar_grafico_fluxo_caixa(metricas)
 
-@graficos_bp.after_request
-def remover_imagens(response):
-    arquivos = [
-        'src/backend/graficos/utils/grafico_linhas.png',
-        'src/backend/graficos/utils/grafico_barras.png',
-        'src/backend/graficos/utils/grafico_pizza.png',
-        'src/backend/graficos/utils/grafico_fluxo_caixa.png'
-    ]
-    
-    for arquivo in arquivos:
+@graficos_bp.route('/api/grafico/delete', methods=['POST'])
+def deletar_grafico():
+    dados = request.get_json()
+    tipo = dados.get('grafico')
+
+    arquivos = {
+        'linhas': 'src/backend/graficos/utils/grafico_linhas.png',
+        'barras': 'src/backend/graficos/utils/grafico_barras.png',
+        'pizza': 'src/backend/graficos/utils/grafico_pizza.png',
+        'fluxo_de_caixa': 'src/backend/graficos/utils/grafico_fluxo_caixa.png'
+    }
+
+    caminho_arquivo = arquivos.get(tipo)
+
+    if caminho_arquivo and os.path.exists(caminho_arquivo):
         try:
-            if os.path.exists(arquivo): 
-                os.remove(arquivo)      
+            os.remove(caminho_arquivo)
+            return jsonify({'message': 'Arquivo excluído com sucesso'}), 200
         except Exception as e:
-            print(f"Erro ao tentar excluir o arquivo {arquivo}: {e}")
+            return jsonify({'error': f'Erro ao excluir o arquivo: {e}'}), 500
     
-    return response
+    return jsonify({'error': 'Arquivo não encontrado'}), 404
+
