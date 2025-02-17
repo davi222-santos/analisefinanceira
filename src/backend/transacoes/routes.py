@@ -1,4 +1,5 @@
-import os, sys
+import os
+import sys
 from bson import ObjectId
 from flask import Blueprint, request, jsonify
 from db import *
@@ -7,9 +8,6 @@ from datetime import datetime
 # Configura o diretório base do projeto
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(BASE_DIR)
-
-
-
 
 transacoes_bp = Blueprint('transacoes', __name__)
 
@@ -24,7 +22,7 @@ def inserir_transacao():
     # Converte user_id para ObjectId
     try:
         user_id = ObjectId(dados["user_id"])
-    except:
+    except Exception as e:
         return jsonify({"erro": "user_id inválido"}), 400
 
     # Converte data para datetime
@@ -32,7 +30,7 @@ def inserir_transacao():
     if "data" in dados:
         try:
             data = datetime.strptime(dados["data"], "%Y-%m-%d")
-        except:
+        except Exception as e:
             return jsonify({"erro": "Formato de data inválido. Use AAAA-MM-DD"}), 400
 
     # Cria o documento da transação
@@ -47,24 +45,21 @@ def inserir_transacao():
         "remetente": dados.get("remetente")
     }
 
-    # Insere no MongoDB
-    resultado = coll_transacoes.insert_one(documento)
-
-    return jsonify({
-        "mensagem": "Transação cadastrada com sucesso",
-        "transacao_id": str(resultado.inserted_id)
-    }), 201
+    try:
+        resultado = coll_transacoes.insert_one(documento)
+        return jsonify({
+            "mensagem": "Transação cadastrada com sucesso",
+            "transacao_id": str(resultado.inserted_id)
+        }), 201
+    except Exception as e:
+        return jsonify({"erro": "Erro ao inserir transação"}), 500
 
 @transacoes_bp.route('/api/transacoes/<user_id>', methods=['GET'])
 def get_transacoes(user_id):
     try:
-        # Converte o user_id para ObjectId
         user_id = ObjectId(user_id)
-
-        # Busca todas as transações do usuário
         transacoes_usuario = list(coll_transacoes.find({"user_id": user_id}))
 
-        # Converte ObjectId para string para evitar erros de serialização
         for transacao in transacoes_usuario:
             transacao["_id"] = str(transacao["_id"])
             transacao["user_id"] = str(transacao["user_id"])
@@ -72,3 +67,22 @@ def get_transacoes(user_id):
         return jsonify(transacoes_usuario), 200
     except Exception as e:
         return jsonify({"erro": str(e)}), 400
+
+# Função para remover uma transação
+@transacoes_bp.route('/api/transacoes/<id>', methods=['DELETE'])
+def remover_transacao(id):
+    try:
+        # Converte o id para ObjectId
+        transacao_id = ObjectId(id)
+
+        # Remover a transação do banco de dados
+        resultado = coll_transacoes.delete_one({"_id": transacao_id})
+
+        # Verifica se a transação foi encontrada e removida
+        if resultado.deleted_count == 0:
+            return jsonify({"erro": "Transação não encontrada"}), 404
+
+        return jsonify({"mensagem": "Transação removida com sucesso"}), 200
+
+    except Exception as e:
+        return jsonify({"erro": "Erro ao remover transação"}), 500
