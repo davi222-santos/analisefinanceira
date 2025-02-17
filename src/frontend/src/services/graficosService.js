@@ -19,12 +19,16 @@ export const obterGrafico = async (periodo, graficoTipo) => {
       throw new Error('Erro ao obter gráfico');
     }
 
-    const dados = await resposta.json();
-    return dados; // Retorna os dados do gráfico gerado
+    // Converte a resposta para um blob (arquivo de imagem)
+    const blob = await resposta.blob();
+    const urlImagem = URL.createObjectURL(blob); // Cria um URL temporário para exibir a imagem
+
+    return urlImagem; // Retorna a URL da imagem para ser usada no front-end
   } catch (erro) {
     console.error('Erro ao obter gráfico:', erro);
     throw erro; // Lança o erro para ser tratado no componente que chama o serviço
   }
 };
+
 
 

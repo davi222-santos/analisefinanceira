@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { obterGrafico } from '../../services/graficosService'; // Importa o serviço
+import { obterGrafico } from '../../services/graficosService';
+import "./Graficos.css"
 
 const Grafico = () => {
   const [inicio, setInicio] = useState(null); // Data de início
   const [fim, setFim] = useState(null); // Data de fim
   const [graficoTipo, setGraficoTipo] = useState('linhas'); // Tipo de gráfico
-  const [dadosGrafico, setDadosGrafico] = useState(null); // Dados do gráfico
+  const [graficoImagem, setGraficoImagem] = useState(null); // Armazena a imagem do gráfico
   const [erro, setErro] = useState(null); // Erros ao carregar os dados
 
   // Função que converte a data para o formato 'YYYY-MM-DD'
@@ -22,11 +23,11 @@ const Grafico = () => {
     }
 
     try {
-      const dados = await obterGrafico(
+      const imagemUrl = await obterGrafico(
         { inicio: formatarData(inicio), fim: formatarData(fim) }, // Envia o período com formato correto
         graficoTipo // Envia o tipo de gráfico
       );
-      setDadosGrafico(dados); // Armazena os dados obtidos
+      setGraficoImagem(imagemUrl); // Armazena a URL da imagem do gráfico
       setErro(null); // Limpa qualquer erro anterior
     } catch (erro) {
       setErro('Erro ao carregar gráfico');
@@ -34,9 +35,9 @@ const Grafico = () => {
   };
 
   return (
-    <div>
+    <div className="grafico-container">
       <h2>Gerar gráfico</h2>
-      
+
       {/* Seletor de data de início */}
       <div>
         <label>
@@ -77,14 +78,12 @@ const Grafico = () => {
 
       <button onClick={obterDados}>Obter Gráfico</button>
 
-      {erro && <p style={{ color: 'red' }}>{erro}</p>}
+      {erro && <p>{erro}</p>}
 
-      {dadosGrafico && (
+      {graficoImagem && (
         <div>
           <h2>Gráfico {graficoTipo} de {inicio ? inicio.toLocaleDateString() : 'não selecionada'} a {fim ? fim.toLocaleDateString() : 'não selecionada'}</h2>
-          {/* Aqui você pode integrar a renderização do gráfico com uma biblioteca como Chart.js ou Recharts */}
-          {/* Exemplo com Chart.js */}
-          <canvas id="graficoCanvas"></canvas>
+          <img src={graficoImagem} alt="Gráfico gerado" />
         </div>
       )}
     </div>
@@ -92,5 +91,6 @@ const Grafico = () => {
 };
 
 export default Grafico;
+
 
 

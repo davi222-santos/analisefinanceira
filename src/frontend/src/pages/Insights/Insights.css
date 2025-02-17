@@ -1,0 +1,97 @@
+/* src/components/Insights.css */
+
+.insights-form {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 30px auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.insights-form div {
+    margin-bottom: 20px;
+}
+
+.insights-form label {
+    font-size: 1.1rem;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.insights-form input[type="date"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.insights-form input[type="date"]:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.insights-form button {
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.insights-form button:hover {
+    transform: translateY(-2px);
+}
+
+.insights-form button:active {
+    transform: translateY(2px);
+}
+
+.insights-form h3 {
+    color: #333;
+    margin-top: 25px;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.insights-form pre {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+.insights-result {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.insights-result h3 {
+    color: #2d3a67;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.insights-form button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+  
+  

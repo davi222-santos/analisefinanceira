@@ -1,0 +1,105 @@
+/* Estilos específicos para o componente Grafico */
+.grafico-container {
+    font-family: 'Arial', sans-serif;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+.grafico-container h2 {
+    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.grafico-container label {
+    font-size: 1.1rem;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.grafico-container .inputs-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.grafico-container .inputs-container > div {
+    flex: 1;
+}
+
+.grafico-container input[type="date"],
+.grafico-container select {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.grafico-container input[type="date"]:focus,
+.grafico-container select:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.grafico-container button {
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 250px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.grafico-container button:hover {
+    transform: translateY(-2px);
+    background-color: #0056b3;
+}
+
+.grafico-container button:active {
+    transform: translateY(2px);
+}
+
+.grafico-container p {
+    color: red;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.grafico-container img {
+    margin-top: 20px;
+    max-width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.grafico-container .grafico-result {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.grafico-container .grafico-result h3 {
+    color: #2d3a67;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+

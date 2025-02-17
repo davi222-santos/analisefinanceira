@@ -17,7 +17,7 @@ body, html {
 
 .register-container .form-container {
     width: 100%;
-    max-width: 900px;
+    max-width: 500px;  /* Diminuído para 500px */
     display: flex;
     background-color: #ffffff;
     border-radius: 8px;
@@ -28,58 +28,60 @@ body, html {
 /* Área de texto e formulário */
 .register-container .text-container {
     flex: 1;
-    padding: 40px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; /* Centraliza o conteúdo, incluindo a imagem */
-    background-color: #d9d9d9; /* Cor de fundo cinza claro */
+    align-items: center;
+    background-color: #d9d9d9;
     border-radius: 8px 0 0 8px;
-    text-align: center; /* Centraliza o texto */
+    text-align: center;
 }
 
 .register-container .text-container .title {
-    font-size: 35px;
+    font-size: 28px;
     font-weight: bold;
     color: black;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .register-container .form-section {
     flex: 1.2;
-    padding: 40px;
+    padding: 30px;
     background-color: #f4f4f4;
     border-radius: 0 8px 8px 0;
 }
 
 .register-container .form-section .input-container {
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .register-container .form-section .input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
+    width: 80%;
+    padding: 8px;
+    font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    background-color: #d9d9d9; /* Fundo cinza claro */
+    background-color: #d9d9d9;
 }
 
 .register-container .form-section .button {
-    width: 100%;
+    width: 80%;  /* Garantido que a largura seja igual aos inputs */
     padding: 10px;
-    font-size: 16px;
+    font-size: 14px;
     background-color: #4a4a8a;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 15px;
 }
 
 .register-container .form-section .button:hover {
     background-color: #3b3b6d;
 }
+
 
