@@ -1,0 +1,205 @@
+/* Estilização do contêiner de transações */
+.transacoes-container {
+    display: flex;
+    gap: 20px; /* Reduzindo o espaço entre os cards */
+    margin: 20px 0;
+    flex-wrap: wrap; /* Permite que os elementos se ajustem */
+    align-items: flex-start;
+    padding: 20px;
+    justify-content: space-between; /* Ajuste para garantir que os cards ocupem o espaço disponível de forma balanceada */
+}
+
+/* Estilização para o formulário de adição de transações */
+.transacoes-form {
+    flex: 1 1 45%; /* Ocupa 45% da largura, mas com flexibilidade para se ajustar */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    min-width: 320px; /* Garante que o card não fique pequeno demais em telas menores */
+}
+
+/* Estilização para o contêiner de filtros e lista */
+.transacoes-lista-container {
+    flex: 1 1 45%;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Alinha os cards de forma balanceada */
+}
+
+/* Filtros, ocupando 50% da largura */
+.filtros-container {
+    flex: 1 1 45%; /* Flexível para ocupar 45% da largura */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    height: 305px;
+}
+
+/* Lista de transações, com altura fixa */
+.transacoes-lista {
+    flex: 1 1 45%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    min-width: 320px;
+}
+
+/* Estilização do título h2 */
+.transacoes-form h2, .transacoes-lista h2, .filtros-container h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Estilização dos inputs e selects dentro do contêiner de filtros */
+.filtros-container input,
+.filtros-container select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    background-color: #fafafa;
+    transition: border 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* Estilização do formulário */
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: #444;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    background-color: #fafafa;
+    transition: border 0.3s ease;
+    box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Estilização da lista de transações */
+.transacoes-lista ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.transacoes-lista li {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.transacoes-lista li:last-child {
+    border-bottom: none;
+}
+
+.transacoes-lista li:hover {
+    background-color: #f4f6f9;
+}
+
+/* Estilização para diferenciar as transações de tipo despesa e receita */
+.saida {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.entrada {
+    color: #2ecc71;
+    font-weight: 600;
+}
+
+/* Adicionando um efeito de lista zebrada */
+.transacoes-lista li:nth-child(odd) {
+    background-color: #f8f8f8;
+}
+
+/* Estilo para os cabeçalhos da lista */
+.transacoes-lista li .titulo {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Melhorando o estilo dos botões */
+button {
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilo do contêiner de transações (para garantir a posição relativa) */
+.transacoes-form {
+  position: relative; /* Necessário para posicionar a setinha em relação a esse contêiner */
+  flex: 1 1 45%;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  min-width: 320px;
+}
+
+/* Estilo da setinha que controla o visível/oculto */
+.toggle-text {
+  position: absolute; /* Posiciona a setinha no contêiner */
+  top: 20px; /* Ajuste a distância do topo conforme necessário */
+  right: 20px; /* Coloca no canto direito */
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Suaviza a rotação */
+}
+
+/* Quando a seta for rotacionada */
+.toggle-text.rotate {
+  transform: rotate(180deg); /* Gira 180 graus */
+}
+
+/* Estilo do ícone dentro do botão de toggle */
+.toggle-text svg {
+  font-size: 20px; /* Ajuste o tamanho do ícone se necessário */
+  transition: transform 0.3s ease; /* Suaviza a rotação do ícone */
+}
+
+  

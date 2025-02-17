@@ -1,0 +1,83 @@
+/* Home.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .home-container {
+    background-color: #2d3a67; /* Fundo azul escuro */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .home-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #d3d3d3; /* Fundo cinza claro */
+  }
+  
+  .home-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2d3a67;
+  }
+  
+  .home-login-button {
+    padding: 5px 15px;
+    background-color: #2d3a67;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .home-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    width: 90%;
+    margin: 0 auto;
+    text-align: left;
+  }
+  
+  .home-text {
+    color: white;
+    max-width: 70%;
+  }
+  
+  .home-text h1 {
+    font-size: 4rem;
+    line-height: 1.4;
+    margin-bottom: 60px;
+    font-weight: bold;
+  }
+  
+  .home-create-account {
+    padding: 10px 20px;
+    background-color: #d3d3d3;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .home-create-account .arrow {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .home-image img {
+    max-width: 300px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
