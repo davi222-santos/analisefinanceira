@@ -11,3 +11,4 @@ react-router-dom
 react-scripts
 recharts
 web-vitals
+jspdf
