@@ -8,13 +8,17 @@ def gerar_grafico_linhas(metricas):
 
         plt.figure()
 
-        # Criar eixo X baseado no número de períodos
-        num_periodos = len(next(iter(metricas.values())))  # Assume que todas as listas têm o mesmo tamanho
-        x = list(range(1, num_periodos + 1))  # Criar um eixo X numérico (exemplo: [1, 2, 3, ...])
+        # Criar eixo X baseado no maior número de períodos encontrados
+        num_periodos = max((len(v) for v in metricas.values()), default=0)
+        if num_periodos == 0:
+            return "Erro: Nenhum dado disponível para gerar o gráfico."
 
-        plt.plot(x, metricas['Receita'], label='Receita Total', marker='o')
-        plt.plot(x, metricas['Despesas'], label='Despesas Totais', marker='o')
-        plt.plot(x, metricas['Lucro'], label='Lucro', marker='o')
+        x = list(range(1, num_periodos + 1))  # Criar um eixo X numérico
+
+        # Plotar somente as métricas que não estão vazias
+        for chave, valores in metricas.items():
+            if valores:  # Só plota se houver valores
+                plt.plot(x[:len(valores)], valores, label=chave, marker='o')
 
         plt.title('Gráfico de Linhas')
         plt.xlabel('Período')
