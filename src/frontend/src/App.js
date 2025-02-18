@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Transacoes from './pages/Transacoes/Transacoes';
 import Graficos from './pages/Graficos/Graficos';
 import Insights from './pages/Insights/Insights';
+import Relatorios from './pages/Relatorios/Relatorios';
 import './App.css';
 
 function Layout() {
@@ -38,6 +39,7 @@ function App() {
                     <Route path="/transacoes" element={<Transacoes />} />
                     <Route path="/graficos" element={<Graficos />} />
                     <Route path="/insights" element={<Insights />} />
+                    <Route path="/relatorios" element={<Relatorios />} />
                 </Routes>
             </div>
         </Router>

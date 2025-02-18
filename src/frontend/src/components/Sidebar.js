@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Home, BarChart2, Settings, LogOut, Brain, ArrowLeftRight, X, Menu } from 'lucide-react';
 import './Sidebar.css';
 
 const Sidebar = () => {
-  const [sidebarVisible, setSidebarVisible] = useState(false); // A sidebar começa fechada
+  const [sidebarVisible, setSidebarVisible] = useState(false); 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleSidebar = () => setSidebarVisible(prevState => !prevState);
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    window.location.href = '/login'; // Redirecionando para login
+    const isConfirmed = window.confirm('Você tem certeza que deseja sair e voltar ao login?');
+    if (isConfirmed) {
+      localStorage.removeItem('authToken');
+      navigate('/login'); // Redireciona para a página de login
+    }
   };
+
+  const closeSidebar = () => setSidebarVisible(false);
 
   return (
     <>
@@ -28,9 +34,9 @@ const Sidebar = () => {
         <div className="sidebar-container">
           <div className="sidebar">
             <div className="profile-section">
-              <div className="profile-icon">EAM</div>
+              <div className="profile-icon">U</div>
               <div className="profile-info">
-                <div className="profile-name">Olá, EAM Engenharia</div>
+                <div className="profile-name">Olá, Usuário</div>
               </div>
             </div>
 
@@ -38,6 +44,7 @@ const Sidebar = () => {
               <Link
                 to="/Dashboard"
                 className={`nav-item ${location.pathname === '/Dashboard' ? 'active' : ''}`}
+                onClick={closeSidebar}
               >
                 <Home size={20} />
                 <span>Dashboard</span>
@@ -45,6 +52,7 @@ const Sidebar = () => {
               <Link
                 to="/transacoes"
                 className={`nav-item ${location.pathname === '/transacoes' ? 'active' : ''}`}
+                onClick={closeSidebar}
               >
                 <ArrowLeftRight size={20} />
                 <span>Transações</span>
@@ -52,6 +60,7 @@ const Sidebar = () => {
               <Link
                 to="/graficos"
                 className={`nav-item ${location.pathname === '/graficos' ? 'active' : ''}`}
+                onClick={closeSidebar}
               >
                 <BarChart2 size={20} />
                 <span>Gráficos</span>
@@ -59,20 +68,25 @@ const Sidebar = () => {
               <Link
                 to="/insights"
                 className={`nav-item ${location.pathname === '/insights' ? 'active' : ''}`}
+                onClick={closeSidebar}
               >
                 <Brain size={20} />
                 <span>Insights</span>
               </Link>
               <Link
-                to="/configuracoes"
-                className={`nav-item ${location.pathname === '/configuracoes' ? 'active' : ''}`}
+                to="/relatorios"
+                className={`nav-item ${location.pathname === '/relatorios' ? 'active' : ''}`}
+                onClick={closeSidebar}
               >
                 <Settings size={20} />
-                <span>Configurações</span>
+                <span>Relatórios</span>
               </Link>
               <div
                 className="nav-item"
-                onClick={handleLogout}
+                onClick={() => {
+                  handleLogout(); // Chama a função de logout
+                  closeSidebar(); 
+                }}
                 aria-label="Sair"
               >
                 <LogOut size={20} />
@@ -87,3 +101,5 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+

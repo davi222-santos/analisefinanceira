@@ -7,6 +7,7 @@ const pageTitles = {
   '/transacoes': 'Transações',
   '/graficos': 'Gráficos',
   '/insights': 'Insights',
+  '/relatorios': 'Relatórios',
 };
 
 const Topbar = () => {
