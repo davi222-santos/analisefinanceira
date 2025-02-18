@@ -1,6 +1,7 @@
 import os, sys
 from datetime import datetime
 from util.auth import token_required
+from bson import ObjectId
 
 # Configura o diretório base do projeto
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -18,7 +19,13 @@ insights_bp = Blueprint('insights', __name__)
 @token_required
 def insights(token):
     dados = request.get_json()
+
+    required_fields = ['periodo', 'user_id']
+    if not all(field in dados for field in required_fields):
+        return jsonify({'error': 'Dados incompletos'}), 400
+    
     periodo = dados.get('periodo')
+    user_id = dados.get('user_id')
 
     inicio = periodo.get('inicio')
     fim = periodo.get('fim')
@@ -28,7 +35,8 @@ def insights(token):
 
     # Buscar as transações dentro do período especificado
     transacoes = coll_transacoes.find({
-        'data': {'$gte': inicio, '$lte': fim}
+        'data': {'$gte': inicio, '$lte': fim},
+        'user_id': ObjectId(user_id)
     })
 
     transacoes_list = []
@@ -41,9 +49,12 @@ def insights(token):
     prompt = format_prompt_insights(transacoes_list)
 
     # Obter a resposta dos insights usando a função get_gemini_response
-    response = get_gemini_response(prompt)
+    try:
+        response = get_gemini_response(prompt)
 
-    # Retornar a resposta como JSON para o front-end
-    return jsonify({
-        'insights': response
-    })
+        # Retornar a resposta como JSON para o front-end
+        return jsonify({
+            'insights': response
+        })
+    except Exception as e:
+        return jsonify({'error': str(e), 'insights': "Não foi possível obter resposta do Gemini"}), 500

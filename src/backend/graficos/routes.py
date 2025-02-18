@@ -12,27 +12,36 @@ from graficos.utils.grafico_pizza import gerar_grafico_pizza
 from graficos.utils.grafico_fluxo_caixa import gerar_grafico_fluxo_caixa
 from db import coll_transacoes
 from util.auth import token_required
+from bson import ObjectId
 
 graficos_bp = Blueprint('graficos', __name__)
 
 
-def criar_metricas(inicio, fim):
+def criar_metricas(inicio, fim, user_id):
     inicio = datetime.strptime(inicio, '%Y-%m-%d')
     fim = datetime.strptime(fim, '%Y-%m-%d')
 
     transacoes = coll_transacoes.find({
-        'data': {'$gte': inicio, '$lte': fim}
+        'data': {'$gte': inicio, '$lte': fim },
+        'user_id': ObjectId(user_id)
     })
+
+    print("transacoes", transacoes)
 
     receita = 0
     despesas = 0
+    receitas_list = []
+    despesas_list = []
+    lucro = 0
 
     for transacao in transacoes:
         valor = float(transacao['valor'])  # Garantindo que o valor seja numérico
         if transacao['tipo'] == 'entrada':
             receita += valor
+            receitas_list.append(valor)
         elif transacao['tipo'] == 'saida':
             despesas += valor
+            despesas_list.append(valor)
 
     lucro = receita - despesas
 
@@ -40,11 +49,17 @@ def criar_metricas(inicio, fim):
         "Receita": receita,
         "Despesas": despesas,
         "Lucro": lucro
-    }    
+    }
+
+    metricas_list = {
+        "Receita": receitas_list,
+        "Despesas": despesas_list,
+        "Lucro": [lucro]
+    }
 
     print(metricas)
 
-    return metricas
+    return metricas, metricas_list
 
 
 @graficos_bp.route('/api/grafico', methods=['POST'])
@@ -53,23 +68,25 @@ def criar_grafico(token):
     dados = request.get_json()
     
     # Verifica se os dados necessários estão presentes
-    if not dados or not dados.get('periodo') or not dados.get('grafico'):
+    required_fields = ['periodo', 'grafico', 'user_id']
+    if not all(field in dados for field in required_fields):
         return jsonify({'error': 'Dados incompletos'}), 400
 
     periodo = dados['periodo']
     grafico = dados['grafico']
+    user_id = dados['user_id']
 
     inicio = periodo.get('inicio')
     fim = periodo.get('fim')
 
-    metricas = criar_metricas(inicio, fim)
+    metricas, metricas_list = criar_metricas(inicio, fim, user_id)
 
     tipos_grafico = ['linhas', 'barras', 'pizza', 'fluxo_de_caixa']
     if grafico not in tipos_grafico:
         return jsonify({'error': 'Tipo de gráfico inválido'}), 400
 
     if grafico == 'linhas':
-        return gerar_grafico_linhas(metricas)
+        return gerar_grafico_linhas(metricas_list)
     elif grafico == 'barras':
         return gerar_grafico_barras(metricas)
     elif grafico == 'pizza':

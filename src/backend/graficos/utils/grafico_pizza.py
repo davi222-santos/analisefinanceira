@@ -19,8 +19,7 @@ def gerar_grafico_pizza(metricas):
     explode = []  # Lista para "explodir" as fatias negativas
     for i, valor in enumerate(valores):
         categoria = categorias[i]
-        # Usar as cores definidas para cada categoria
-        cor = cores_categoria.get(categoria, 'gray')  # Cor padrão se não for uma categoria específica
+        cor = cores_categoria.get(categoria, 'gray')  # Cor padrão
 
         if valor < 0:
             cor = 'red'  # Se o valor for negativo, cor vermelha
@@ -31,13 +30,15 @@ def gerar_grafico_pizza(metricas):
             explode.append(0)  # Não explodir a fatia positiva
         cores.append(cor)
 
-    # Criar arquivo temporário
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmpfile:
-        caminho_arquivo = tmpfile.name  # Caminho temporário para o arquivo gerado
-
-        # Criar gráfico de pizza
-        plt.figure()
-        wedges, texts, autotexts = plt.pie(
+    # Se todos os valores forem zero, tratamos o erro
+    if sum(valores_abs) == 0:
+        fig, ax = plt.subplots()
+        ax.text(0.5, 0.5, "Nenhum dado disponível", fontsize=14, ha='center', va='center')
+        ax.set_xticks([])
+        ax.set_yticks([])
+    else:
+        fig, ax = plt.subplots()
+        wedges, texts, autotexts = ax.pie(
             valores_abs,  # Usar valores absolutos
             labels=categorias,
             autopct='%1.1f%%',
@@ -52,13 +53,14 @@ def gerar_grafico_pizza(metricas):
             if valores[i] < 0:
                 autotext.set_text(f"{autotext.get_text()} (negativo)")
 
-        plt.title('Gráfico de Pizza - Demonstração de Receita/Despesa/Lucro')
+    plt.title('Gráfico de Pizza - Demonstração de Receita/Despesa/Lucro')
+
+    # Criar arquivo temporário
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmpfile:
+        caminho_arquivo = tmpfile.name
         plt.savefig(caminho_arquivo)
         plt.close()
 
     response = send_file(caminho_arquivo, mimetype='image/png', as_attachment=True)
     response.headers['Content-Disposition'] = 'inline; filename=grafico_pizza.png'
     return response
-
-
-
