@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { getTransacoes } from '../../services/transacoesService';
 import { Link } from "react-router-dom";
 import './Dashboard.css';
+import { Pie, Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+
+// Registra os elementos do Chart.js que você vai usar
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
 const formatarValor = (valor) => {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
@@ -49,6 +54,37 @@ const Dashboard = () => {
     setLucro(totalReceita - totalDespesa);
   }, [mesSelecionado, transacoes]);
 
+  // Dados para o gráfico de pizza (Receita vs. Despesa)
+  const pieData = {
+    labels: ['Receita', 'Despesa'],
+    datasets: [
+      {
+        data: [receita, despesa],
+        backgroundColor: ['#4CAF50', '#F44336'],
+        borderColor: ['#388E3C', '#D32F2F'],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const barData = {
+    labels: ['Receita', 'Despesa', 'Lucro Líquido'],
+    datasets: [
+      {
+        label: 'Receita',  
+        data: [receita, despesa, lucro],
+        backgroundColor: ['#4CAF50', '#F44336', '#2d3a67'],
+        borderColor: ['#388E3C', '#D32F2F', '#1976D2'],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  // Função para aplicar a cor de acordo com o tipo de transação
+  const getTransactionClass = (tipo) => {
+    return tipo === 'entrada' ? 'income' : 'expense';
+  };
+
   return (
     <div className="dashboard-container">
       <div className="main-content">
@@ -69,7 +105,7 @@ const Dashboard = () => {
               <h2>Receita Mensal</h2>
             </div>
             <div className="card-content">
-              <div className="amount income">{formatarValor(receita)}</div>
+              <div className={`amount ${getTransactionClass('entrada')}`}>{formatarValor(receita)}</div>
             </div>
           </div>
 
@@ -78,7 +114,7 @@ const Dashboard = () => {
               <h2>Despesa Mensal</h2>
             </div>
             <div className="card-content">
-              <div className="amount expense">{formatarValor(despesa)}</div>
+              <div className={`amount ${getTransactionClass('saida')}`}>{formatarValor(despesa)}</div>
             </div>
           </div>
 
@@ -103,9 +139,10 @@ const Dashboard = () => {
                   .filter((t) => new Date(t.data).toISOString().slice(0, 7) === mesSelecionado)
                   .slice(0, 5)
                   .map((t) => (
-                    <p key={t._id}>{t.descricao} - {formatarValor(t.valor)}</p>
-                  ))
-                }
+                    <p key={t._id} className={getTransactionClass(t.tipo)}>
+                      {t.descricao} - {formatarValor(t.valor)}
+                    </p>
+                  ))}
               </div>
               <Link to="/transacoes">
                 <button className="view-all">Ver toda sua atividade &gt;</button>
@@ -115,10 +152,10 @@ const Dashboard = () => {
 
           <div className="charts-section">
             <div className="card pie-chart-container">
-              {/* Pie chart será renderizado aqui */}
+              <Pie data={pieData} />
             </div>
             <div className="card bar-chart-container">
-              {/* Bar chart será renderizado aqui */}
+              <Bar data={barData} />
             </div>
           </div>
         </div>
@@ -127,5 +164,9 @@ const Dashboard = () => {
   );
 };
 
+
 export default Dashboard;
+
+
+
 

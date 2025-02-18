@@ -105,7 +105,7 @@
   min-height: 300px;
 }
 
-/* Botão para ver todas as atividades */
+
 .view-all {
   width: 100%;
   text-align: left;
@@ -124,14 +124,44 @@
   gap: 1.5rem;
 }
 
-.pie-chart-container {
-  min-height: 200px;
-  margin-bottom: 1rem;
+.pie-chart-container{
+  box-sizing: border-box; 
+  padding-left: 200px; 
+  width: 100%;
+  height: 220px;
 }
 
 .bar-chart-container {
-  min-height: 200px;
+  box-sizing: border-box; 
+  padding-left: 100px; 
+  width: 100%;
+  height: 220px;
 }
+
+/* Para transações de Receita (Entrada) */
+.income {
+  color: #4CAF50;  /* Verde para receita */
+  font-weight: bold;
+}
+
+/* Para transações de Despesa (Saída) */
+.expense {
+  color: #F44336;  
+  font-weight: bold;
+}
+
+.amount.income {
+  color: #4CAF50;  
+}
+
+.amount.expense {
+  color: #F44336;  
+}
+
+.amount.profit {
+  color: #2d3a67;  
+}
+
 
 /* Responsividade */
 @media (max-width: 768px) {
