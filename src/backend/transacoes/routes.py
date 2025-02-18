@@ -4,6 +4,7 @@ from bson import ObjectId
 from flask import Blueprint, request, jsonify
 from db import *
 from datetime import datetime
+from util.auth import token_required
 
 # Configura o diretório base do projeto
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -11,8 +12,10 @@ sys.path.append(BASE_DIR)
 
 transacoes_bp = Blueprint('transacoes', __name__)
 
+
 @transacoes_bp.route('/api/transacoes', methods=['POST'])
-def inserir_transacao():
+@token_required
+def inserir_transacao(token):
     dados = request.get_json()
 
     # Verifica se os campos obrigatórios estão presentes
@@ -54,8 +57,10 @@ def inserir_transacao():
     except Exception as e:
         return jsonify({"erro": "Erro ao inserir transação"}), 500
 
+
 @transacoes_bp.route('/api/transacoes/<user_id>', methods=['GET'])
-def get_transacoes(user_id):
+@token_required
+def get_transacoes(user_id, token):
     try:
         user_id = ObjectId(user_id)
         transacoes_usuario = list(coll_transacoes.find({"user_id": user_id}))
@@ -68,9 +73,11 @@ def get_transacoes(user_id):
     except Exception as e:
         return jsonify({"erro": str(e)}), 400
 
+
 # Função para remover uma transação
 @transacoes_bp.route('/api/transacoes/<id>', methods=['DELETE'])
-def remover_transacao(id):
+@token_required
+def remover_transacao(id, token):
     try:
         transacao_id = ObjectId(id)
 

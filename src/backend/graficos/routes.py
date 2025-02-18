@@ -11,8 +11,10 @@ from graficos.utils.grafico_barras import gerar_grafico_barras
 from graficos.utils.grafico_pizza import gerar_grafico_pizza
 from graficos.utils.grafico_fluxo_caixa import gerar_grafico_fluxo_caixa
 from db import coll_transacoes
+from util.auth import token_required
 
 graficos_bp = Blueprint('graficos', __name__)
+
 
 def criar_metricas(inicio, fim):
     inicio = datetime.strptime(inicio, '%Y-%m-%d')
@@ -44,8 +46,10 @@ def criar_metricas(inicio, fim):
 
     return metricas
 
+
 @graficos_bp.route('/api/grafico', methods=['POST'])
-def criar_grafico():
+@token_required
+def criar_grafico(token):
     dados = request.get_json()
     
     # Verifica se os dados necessários estão presentes
@@ -73,8 +77,10 @@ def criar_grafico():
     elif grafico == 'fluxo_de_caixa':
         return gerar_grafico_fluxo_caixa(metricas)
 
+
 @graficos_bp.route('/api/grafico/delete', methods=['POST'])
-def deletar_grafico():
+@token_required
+def deletar_grafico(token):
     dados = request.get_json()
     tipo = dados.get('grafico')
 

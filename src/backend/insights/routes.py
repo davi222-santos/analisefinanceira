@@ -1,5 +1,6 @@
 import os, sys
 from datetime import datetime
+from util.auth import token_required
 
 # Configura o diretório base do projeto
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -12,8 +13,10 @@ from insights.gemini import get_gemini_response
 
 insights_bp = Blueprint('insights', __name__)
 
+
 @insights_bp.route('/api/insights', methods=['POST'])
-def insights():
+@token_required
+def insights(token):
     dados = request.get_json()
     periodo = dados.get('periodo')
 
