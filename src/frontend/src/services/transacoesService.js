@@ -1,6 +1,6 @@
 // src/services/transacaoServices.js
 
-import API_URL from './config'; // Importando a URL da API
+import API_URL from './config';
 
 // Função para inserir uma transação
 export async function inserirTransacao(dados) {
@@ -31,12 +31,10 @@ export async function inserirTransacao(dados) {
 // Função para obter as transações de um usuário
 export async function getTransacoes(userId) {
   try {
-    const token = localStorage.getItem('token');
-    console.log('Token:', token);
     const response = await fetch(`${API_URL}/api/transacoes/${userId}`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     });
 

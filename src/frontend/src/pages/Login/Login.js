@@ -16,16 +16,13 @@ const Login = () => {
 
         try {
             const response = await autenticarUsuario({ cnpj, senha: password });
-            console.log("Resposta da API in Login:", response);
-
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('userId', response.user_id);
-            console.log("Token e User ID atualizados:", localStorage.getItem('token'), localStorage.getItem('userId'));
-
-            if (response.user_id) {
-                localStorage.setItem("user_id", response.user_id); // Salva no localStorage
-                navigate("/dashboard"); // Redireciona para a dashboard
+            
+            if (response.user_id && response.token) {
+                localStorage.setItem("user_id", response.user_id);
+                localStorage.setItem('token', response.token);
+                navigate("/dashboard");
             } else {
+                console.log("Erro ao autenticar, token ou user_id não encontrados", response);
                 setMensagem(response.message || "Erro ao autenticar");
             }
         } catch (error) {

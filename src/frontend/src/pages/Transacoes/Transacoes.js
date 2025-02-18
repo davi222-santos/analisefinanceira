@@ -62,7 +62,6 @@ const Transacao = () => {
 
   useEffect(() => {
     getTransacoes(userId).then((data) => {
-      console.log("Resposta da API:", data);
       setTransacoes(data);
     })
   }, [userId]);

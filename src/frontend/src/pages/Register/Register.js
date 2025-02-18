@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { cadastrarUsuario } from "../../services/usuarioService"; // Importa o serviço de API
+import { cadastrarUsuario } from "../../services/usuarioService";
 import "./Register.css";
 import ExampleImage from "../../assets/images/3.png";
 
@@ -34,7 +34,7 @@ const Register = () => {
                 cnpj: dados.cnpj,
                 nome: dados.nome,
                 email: dados.email,
-                senha: dados.senha, // Adicionamos o campo senha ao formulário
+                senha: dados.senha,
             });
 
             if (response.user_id) {

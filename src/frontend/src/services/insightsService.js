@@ -1,5 +1,5 @@
 // src/services/insightsService.js
-import API_URL from './config';  // Importa a URL da API do arquivo de configuração
+import API_URL from './config';
 
 export const obterInsights = async (periodo) => {
     try {
