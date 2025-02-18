@@ -1,0 +1,19 @@
+/* App.css */
+.App {
+  text-align: center;
+}
+
+header, footer {
+  background-color: #d3d3d3; /* Fundo cinza claro */
+  padding: 20px;
+  color: #2d3a67; /* Cor do texto em azul escuro */
+}
+
+button {
+  background-color: #2d3a67; 
+}
+
+button:hover {
+  background-color: #21a1f1; 
+}
+

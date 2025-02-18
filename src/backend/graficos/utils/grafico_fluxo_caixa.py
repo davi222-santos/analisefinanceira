@@ -1,25 +1,25 @@
 import matplotlib.pyplot as plt
-import os
-from flask import send_file, after_this_request
-import os
+import tempfile
+from flask import send_file
 
 def gerar_grafico_fluxo_caixa(metricas):
-    #entrada
+    # Entrada e saída
     entradas = [metricas['Receita']]
     saidas = [metricas['Despesas']]
 
-    diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-    caminho_arquivo = os.path.join(diretorio_atual, 'grafico_fluxo_caixa.png')
+    # Criar arquivo temporário
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmpfile:
+        caminho_arquivo = tmpfile.name  # Caminho temporário para o arquivo gerado
 
-    #criar gráfico
-    plt.figure()
-    plt.bar(['Entradas', 'Saídas'], [entradas[0], saidas[0]], color=['green', 'red'])
-    plt.title('Gráfico de Fluxo de Caixa')
-    plt.ylabel('Valores')
-    plt.savefig(caminho_arquivo)
-    plt.close()
-
+        # Criar gráfico de barras
+        plt.figure()
+        plt.bar(['Entradas', 'Saídas'], [entradas[0], saidas[0]], color=['green', 'red'])
+        plt.title('Gráfico de Fluxo de Caixa')
+        plt.ylabel('Valores')
+        plt.savefig(caminho_arquivo)
+        plt.close()
 
     response = send_file(caminho_arquivo, mimetype='image/png', as_attachment=True)
     response.headers['Content-Disposition'] = 'inline; filename=grafico_fluxo_caixa.png'
     return response
+

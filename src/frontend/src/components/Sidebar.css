@@ -1,0 +1,156 @@
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background: #2f3c7e;
+  color: white;
+  padding: 1.5rem 1.5rem 1rem;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0);
+  position:fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+
+/* Ajustar o conteúdo da página */
+.content {
+  margin-left: 260px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* Ocultar a sidebar */
+.sidebar.hidden {
+  transform: translateX(-100%);
+}
+
+.content.sidebar-hidden {
+  margin-left: 0;
+}
+
+/* Nome da Empresa */
+.company-name {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  z-index: 10;
+}
+
+/* Botão de alternância (hamburger / close) */
+.menu-btn {
+  position: fixed;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  top: 15px;  /* Fixe o botão no topo */
+}
+
+.menu-btn.open {
+  color: rgb(243, 247, 243);
+  left: 250px; /* Altere o left para ajustar conforme necessário */
+}
+
+.menu-btn.closed {
+  color: #ffffff;
+  left: 20px; /* Posição do botão quando fechado */
+}
+
+/* Seção do Perfil */
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  color: #2f3c7e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-weight: 600;
+}
+
+.profile-link {
+  font-size: 0.875rem;
+  color: #cbd5e1;
+  transition: color 0.3s ease;
+}
+
+.profile-link:hover {
+  color: #ffffff;
+}
+
+/* Menu de Navegação */
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+/* Ícones do menu */
+.nav-item svg {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+/* Hover e Ativo */
+.nav-item:hover,
+.nav-item.active {
+  background-color: #374785;
+  transform: scale(1.05);
+}
+
+.nav-item:hover svg,
+.nav-item.active svg {
+  color: #ffffff;
+}
+
+.nav-item.active {
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);
+  border-left: 5px solid #ffffff;
+}
+
+/* Texto do menu */
+.nav-item span {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.nav-item:hover span,
+.nav-item.active span {
+  color: #ffffff;
+}
