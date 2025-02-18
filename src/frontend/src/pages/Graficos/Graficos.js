@@ -82,7 +82,7 @@ const Grafico = () => {
 
       {graficoImagem && (
         <div>
-          <h2>Gráfico {graficoTipo} de {inicio ? inicio.toLocaleDateString() : 'não selecionada'} a {fim ? fim.toLocaleDateString() : 'não selecionada'}</h2>
+          <h2>Gráfico de {graficoTipo}</h2>
           <img src={graficoImagem} alt="Gráfico gerado" />
         </div>
       )}
