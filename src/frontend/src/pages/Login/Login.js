@@ -16,7 +16,11 @@ const Login = () => {
 
         try {
             const response = await autenticarUsuario({ cnpj, senha: password });
-            console.log("Resposta da API:", response);
+            console.log("Resposta da API in Login:", response);
+
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('userId', response.user_id);
+            console.log("Token e User ID atualizados:", localStorage.getItem('token'), localStorage.getItem('userId'));
 
             if (response.user_id) {
                 localStorage.setItem("user_id", response.user_id); // Salva no localStorage

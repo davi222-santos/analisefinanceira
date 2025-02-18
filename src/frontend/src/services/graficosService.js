@@ -8,6 +8,7 @@ export const obterGrafico = async (periodo, graficoTipo) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({
         periodo: periodo, // Envia o objeto periodo { inicio, fim }

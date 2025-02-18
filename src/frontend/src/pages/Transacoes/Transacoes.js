@@ -44,7 +44,7 @@ const Filtros = ({ filtroMes, setFiltroMes, filtroAno, setFiltroAno }) => (
 );
 
 const Transacao = () => {
-  const userId = '67b2111fa7dcb359a124180c';
+  const userId = localStorage.getItem('userId');
   const [transacoes, setTransacoes] = useState([]);
   const [dadosTransacao, setDadosTransacao] = useState({
     valor: '',
@@ -61,7 +61,10 @@ const Transacao = () => {
   const [mostrarCamposExtras, setMostrarCamposExtras] = useState(false);
 
   useEffect(() => {
-    getTransacoes(userId).then(setTransacoes);
+    getTransacoes(userId).then((data) => {
+      console.log("Resposta da API:", data);
+      setTransacoes(data);
+    })
   }, [userId]);
 
   const handleChange = (e) => {

@@ -9,6 +9,7 @@ export async function inserirTransacao(dados) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(dados),
     });
@@ -30,8 +31,13 @@ export async function inserirTransacao(dados) {
 // Função para obter as transações de um usuário
 export async function getTransacoes(userId) {
   try {
+    const token = localStorage.getItem('token');
+    console.log('Token:', token);
     const response = await fetch(`${API_URL}/api/transacoes/${userId}`, {
       method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
     });
 
     if (response.ok) {
@@ -53,6 +59,7 @@ export async function removerTransacao(id) {
     try {
       const response = await fetch(`${API_URL}/api/transacoes/${id}`, {
         method: 'DELETE',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       });
   
       if (response.ok) {

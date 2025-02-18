@@ -8,7 +8,7 @@ const formatarValor = (valor) => {
 };
 
 const Dashboard = () => {
-  const userId = '67b2111fa7dcb359a124180c';
+  const userId = localStorage.getItem('userId');
   const [transacoes, setTransacoes] = useState([]);
   const [receita, setReceita] = useState(0);
   const [despesa, setDespesa] = useState(0);

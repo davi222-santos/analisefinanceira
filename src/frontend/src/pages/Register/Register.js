@@ -39,6 +39,7 @@ const Register = () => {
 
             if (response.user_id) {
                 setMensagem("Usuário cadastrado com sucesso!");
+                localStorage.setItem('userId', response.user_id);
                 setTimeout(() => navigate("/login"), 2000); // Redireciona para o login após 2s
             } else {
                 setMensagem(response.message || "Erro ao cadastrar");
