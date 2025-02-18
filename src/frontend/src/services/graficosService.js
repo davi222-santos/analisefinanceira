@@ -11,6 +11,7 @@ export const obterGrafico = async (periodo, graficoTipo) => {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({
+        user_id: localStorage.getItem('userId'),
         periodo: periodo, // Envia o objeto periodo { inicio, fim }
         grafico: graficoTipo, // Envia o tipo de gráfico
       }),

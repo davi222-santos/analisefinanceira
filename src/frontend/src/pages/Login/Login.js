@@ -18,7 +18,7 @@ const Login = () => {
             const response = await autenticarUsuario({ cnpj, senha: password });
             
             if (response.user_id && response.token) {
-                localStorage.setItem("user_id", response.user_id);
+                localStorage.setItem("userId", response.user_id);
                 localStorage.setItem('token', response.token);
                 navigate("/dashboard");
             } else {

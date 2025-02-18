@@ -89,6 +89,7 @@ const Transacao = () => {
   };
 
   const handleRemoverTransacao = async (id) => {
+    console.log("Removendo transação", id);
     await removerTransacao(id);
     getTransacoes(userId).then(setTransacoes);
   };

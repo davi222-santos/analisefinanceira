@@ -5,7 +5,7 @@ import "./Graficos.css"
 const Grafico = () => {
   const [inicio, setInicio] = useState(null); // Data de início
   const [fim, setFim] = useState(null); // Data de fim
-  const [graficoTipo, setGraficoTipo] = useState('linhas'); // Tipo de gráfico
+  const [graficoTipo, setGraficoTipo] = useState('fluxo_de_caixa'); // Tipo de gráfico
   const [graficoImagem, setGraficoImagem] = useState(null); // Armazena a imagem do gráfico
   const [erro, setErro] = useState(null); // Erros ao carregar os dados
 

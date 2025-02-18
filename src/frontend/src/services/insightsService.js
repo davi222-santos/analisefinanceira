@@ -9,7 +9,7 @@ export const obterInsights = async (periodo) => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify({ periodo }),
+        body: JSON.stringify({ periodo: periodo, user_id: localStorage.getItem('userId'), }),
       });
   
       if (response.ok) {
@@ -17,6 +17,7 @@ export const obterInsights = async (periodo) => {
         return data;  // Retorna os insights e dados para o front-end
       } else {
         console.error('Erro ao obter dados da API');
+        return { insights: "Erro ao obter dados" };
       }
     } catch (error) {
       console.error('Erro na requisição:', error);

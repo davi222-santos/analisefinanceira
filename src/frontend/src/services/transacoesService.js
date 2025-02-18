@@ -57,7 +57,9 @@ export async function removerTransacao(id) {
     try {
       const response = await fetch(`${API_URL}/api/transacoes/${id}`, {
         method: 'DELETE',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        }
       });
   
       if (response.ok) {
