@@ -22,6 +22,12 @@ const Dashboard = () => {
   }, [userId]);
 
   useEffect(() => {
+    // Define o mês atual no formato "YYYY-MM"
+    const mesAtual = new Date().toISOString().slice(0, 7);
+    setMesSelecionado(mesAtual);
+  }, []);
+
+  useEffect(() => {
     if (!mesSelecionado) return;
 
     const transacoesFiltradas = transacoes.filter((t) => {
